@@ -1,8 +1,8 @@
 # ASMCalc
 Why? Because I'm bored.
 
-### Syscalls
-| syscall | purpose            |
+### Syscalls Used
+| syscall | value              |
 | ------- | ------------------ |
-| write() | Write to terminal  |
-| read()  | Read from terminal |
+| write() | 0x4                |
+| read()  | 0x3                |
