@@ -4,7 +4,7 @@ section .bss
     op resb 1 ; reserve for operation
 
 section .data
-    ret db "Output:",0x7
+    retint db "Output:",0x7
     num1p db "Number 1: ",0xa
     opp db "Operation: ",0xb
     num2p db "Number 2: ",0xa
