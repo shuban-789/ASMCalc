@@ -15,14 +15,14 @@ section .text
     _start
     ; Number 1 Prompt
     mov eax,0x4 ; write() syscall (0x4)
-    mov ebx,0x1 ; stdout
+    mov ebx,0x1 ; stdout (0x1)
     mov ecx,num1p ; store prompt itself
     mov edx,0xa ; store length of this prompt
     int 0x80 ; initiate syscalls
 
     ; Number 1 Read
     mov eax,0x3 ; read() syscall (0x3)
-    mov ebx,0x0 ; stdin
+    mov ebx,0x0 ; stdin (0x0)
     mov ecx,num1 ; store to num1
     mov edx,0x4 ; bytes for num1
 
