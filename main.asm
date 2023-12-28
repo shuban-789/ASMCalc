@@ -8,6 +8,10 @@ section .data
     num1p db "Number 1: ",0xa
     opp db "Operation: ",0xb
     num2p db "Number 2: ",0xa
+    addx db "+",0x1
+    subx db "-",0x1
+    multx db "*",0x1
+    divx db "/",0x1
 
 section .text
     global _start
