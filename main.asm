@@ -23,45 +23,45 @@ section .text
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ; Number 1 Prompt
-    mov eax,0x4 ; write() syscall (0x4)
-    mov ebx,0x1 ; stdout (0x1)
-    mov ecx,num1p ; store prompt itself
-    mov edx,0xa ; store length of this prompt
+    mov %rax,0x4 ; write() syscall (0x4)
+    mov %rdi,0x1 ; stdout (0x1)
+    mov %rsi,num1p ; store prompt itself
+    mov %rdx,0xa ; store length of this prompt
     int 0x80 ; initiate syscalls
 
     ; Number 1 Read
-    mov eax,0x3 ; read() syscall (0x3)
-    mov ebx,0x0 ; stdin (0x0)
-    mov ecx,num1 ; store to num1
-    mov edx,0x4 ; bytes for num1
+    mov %rax,0x3 ; read() syscall (0x3)
+    mov %rdi,0x0 ; stdin (0x0)
+    mov %rsi,num1 ; store to num1
+    mov %rdx,0x4 ; bytes for num1
     int 0x80 ; initiate syscalls
 
     ; Operation Prompt
-    mov eax,0x4 ; write() syscall (0x4)
-    mov ebx,0x1 ; stdout (0x1)
-    mov ecx,opp ; store prompt itself
-    mov edx,0xb ; store length of this prompt
+    mov %rax,0x4 ; write() syscall (0x4)
+    mov %rdi,0x1 ; stdout (0x1)
+    mov %rsi,opp ; store prompt itself
+    mov %rdx,0xb ; store length of this prompt
     int 0x80 ; initiate syscalls
 
     ; Operation Read
-    mov eax,0x3 ; read() syscall (0x4)
-    mov ebx,0x0 ; stdin (0x0)
-    mov ecx,opp ; store to op
-    mov edx,0x1 ; bytes for operator
+    mov %rax,0x3 ; read() syscall (0x4)
+    mov %rdi,0x0 ; stdin (0x0)
+    mov %rsi,opp ; store to op
+    mov %rdx,0x1 ; bytes for operator
     int 0x80 ; initiate syscalls
 
     ; Number 2 Prompt
-    mov eax,0x4 ; write() syscall (0x4)
-    mov ebx,0x1 ; stdout (0x1)
-    mov ecx,num2p ; store prompt itself
-    mov edx,0xa ; store length of this prompt
+    mov %rax,0x4 ; write() syscall (0x4)
+    mov %rdi,0x1 ; stdout (0x1)
+    mov %rsi,num2p ; store prompt itself
+    mov %rdx,0xa ; store length of this prompt
     int 0x80 ; initiate syscalls
 
     ; Number 2 Read
-    mov eax,0x3 ; read() syscall (0x3)
-    mov ebx,0x0 ; stdin (0x0)
-    mov ecx,num2 ; store to num1
-    mov edx,0x4 ; bytes for num1
+    mov %rax,0x3 ; read() syscall (0x3)
+    mov %rdi,0x0 ; stdin (0x0)
+    mov %rsi,num2 ; store to num1
+    mov %rdx,0x4 ; bytes for num1
     int 0x80 ; initiate syscalls
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
