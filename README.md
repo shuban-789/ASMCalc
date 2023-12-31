@@ -6,5 +6,5 @@ Why? Because I'm bored.
 | -------------- | --------------------- | ---------------- |
 | write()        | 0x4                   | rax              |
 | read()         | 0x3                   | rax              |
-| stdin          | 0x0                   | rbx              |
-| stdout         | 0x1                   | rbx              |
+| stdin          | 0x0                   | rdi              |
+| stdout         | 0x1                   | rdi              |
