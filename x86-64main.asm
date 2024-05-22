@@ -1,121 +1,122 @@
 section .bss
-    num1 resd 1 ; reserve for num1
-    num2 resd 1 ; reserve for num2
-    op resb 1 ; reserve for operation
-    result resb 1 ; reserve for result
+    num1 resd 1        ; reserve for num1
+    num2 resd 1        ; reserve for num2
+    op resb 1          ; reserve for operation
+    result resd 1      ; reserve for result
 
 section .data
-    retint db "Output:",0x7
-    num1p db "Number 1: ",0xa
-    opp db "Operation: ",0xb
-    num2p db "Number 2: ",0xa
-    addx db "+",0x1
-    subx db "-",0x1
-    multx db "*",0x1
-    divx db "/",0x1
+    retint db "Output:", 0x7, 0
+    num1p db "Number 1: ", 0xa, 0
+    opp db "Operation: ", 0xb, 0
+    num2p db "Number 2: ", 0xa, 0
+    addx db "+", 0x1, 0
+    subx db "-", 0x1, 0
+    multx db "*", 0x1, 0
+    divx db "/", 0x1, 0
 
 section .text
     global _start
 
-    _start
+_start:
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;       Get Inputs       ;;
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ; Number 1 Prompt
-    mov %rax,0x4 ; write() syscall (0x4)
-    mov %rdi,0x1 ; stdout (0x1)
-    mov %rsi,num1p ; store prompt itself
-    mov %rdx,0xa ; store length of this prompt
-    syscall ; initiate syscalls
+    mov rax, 0x1         ; write() syscall (0x1)
+    mov rdi, 0x1         ; stdout (0x1)
+    mov rsi, num1p       ; store prompt itself
+    mov rdx, 0xa         ; store length of this prompt
+    syscall              ; initiate syscall
 
     ; Number 1 Read
-    mov %rax,0x3 ; read() syscall (0x3)
-    mov %rdi,0x0 ; stdin (0x0)
-    mov %rsi,num1 ; store to num1
-    mov %rdx,0x4 ; bytes for num1
-    syscall ; initiate syscalls
+    mov rax, 0x0         ; read() syscall (0x0)
+    mov rdi, 0x0         ; stdin (0x0)
+    mov rsi, num1        ; store to num1
+    mov rdx, 0x4         ; bytes for num1
+    syscall              ; initiate syscall
 
     ; Operation Prompt
-    mov %rax,0x4 ; write() syscall (0x4)
-    mov %rdi,0x1 ; stdout (0x1)
-    mov %rsi,opp ; store prompt itself
-    mov %rdx,0xb ; store length of this prompt
-    syscall ; initiate syscalls
+    mov rax, 0x1         ; write() syscall (0x1)
+    mov rdi, 0x1         ; stdout (0x1)
+    mov rsi, opp         ; store prompt itself
+    mov rdx, 0xb         ; store length of this prompt
+    syscall              ; initiate syscall
 
     ; Operation Read
-    mov %rax,0x3 ; read() syscall (0x4)
-    mov %rdi,0x0 ; stdin (0x0)
-    mov %rsi,opp ; store to op
-    mov %rdx,0x1 ; bytes for operator
-    syscall ; initiate syscalls
+    mov rax, 0x0         ; read() syscall (0x0)
+    mov rdi, 0x0         ; stdin (0x0)
+    mov rsi, op          ; store to op
+    mov rdx, 0x1         ; bytes for operator
+    syscall              ; initiate syscall
 
     ; Number 2 Prompt
-    mov %rax,0x4 ; write() syscall (0x4)
-    mov %rdi,0x1 ; stdout (0x1)
-    mov %rsi,num2p ; store prompt itself
-    mov %rdx,0xa ; store length of this prompt
-    syscall ; initiate syscalls
+    mov rax, 0x1         ; write() syscall (0x1)
+    mov rdi, 0x1         ; stdout (0x1)
+    mov rsi, num2p       ; store prompt itself
+    mov rdx, 0xa         ; store length of this prompt
+    syscall              ; initiate syscall
 
     ; Number 2 Read
-    mov %rax,0x3 ; read() syscall (0x3)
-    mov %rdi,0x0 ; stdin (0x0)
-    mov %rsi,num2 ; store to num1
-    mov %rdx,0x4 ; bytes for num1
-    syscall ; initiate syscalls
+    mov rax, 0x0         ; read() syscall (0x0)
+    mov rdi, 0x0         ; stdin (0x0)
+    mov rsi, num2        ; store to num2
+    mov rdx, 0x4         ; bytes for num2
+    syscall              ; initiate syscall
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;        Calculate       ;;
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    movzx %eax,byte [op] ; Store bytes of op into eax register
-    cmp %eax,"+"
+    movzx eax, byte [op] ; Store bytes of op into eax register
+    cmp eax, '+'
     je add_func
-    cmp %eax,"-"
+    cmp eax, '-'
     je subtract_func
-    cmp %eax,"*"
+    cmp eax, '*'
     je multiply_func
-    cmp %eax,"/"
+    cmp eax, '/'
     je divide_func
 
-    add_func:
-        mov %rax,dword [num1]
-        mov %rbx,dword [num2]
+add_func:
+    mov eax, dword [num1]
+    mov ebx, dword [num2]
+    add eax, ebx
+    mov dword [result], eax
+    jmp output_result
 
-        add %rax,%rbx
+subtract_func:
+    mov eax, dword [num1]
+    mov ebx, dword [num2]
+    sub eax, ebx
+    mov dword [result], eax
+    jmp output_result
 
-        mov dword [result],%rax
+multiply_func:
+    mov eax, dword [num1]
+    mov ebx, dword [num2]
+    imul eax, ebx
+    mov dword [result], eax
+    jmp output_result
 
-        jmp exit
-    subtract_func:
-        mov %rax,dword [num1]
-        mov %rax,dword [num2]
+divide_func:
+    mov eax, dword [num1]
+    mov ebx, dword [num2]
+    xor edx, edx         ; Clear edx for division
+    div ebx
+    mov dword [result], eax
+    jmp output_result
 
-        sub %rax,&rbx
+output_result:
+    ; Output result (example - you would need to convert the result to a string)
+    ; This part is simplified. Conversion to string and printing would be needed
+    mov eax, 0x1         ; write() syscall
+    mov rdi, 0x1         ; stdout
+    mov rsi, retint      ; output text
+    mov rdx, 0x7         ; length of text
+    syscall
 
-        mov dword [result],%rax
-
-        jmp exit
-    multiply_func:
-        mov %rax,dword [num1]
-        mov %rbx,dword [num2]
-
-
-
-        mov dword [result],%rax
-
-        jmp exit
-    divide_func:
-        mov %rax,dword [num1]
-        mov %rbx,dword [num2]
-
-
-
-        mov dword [result],%rax
-
-        jmp exit
-    exit:
-        mov %eax,0x3c ; sys_exit()
-        xor %edi,%edi ; exit code 0
-        syscall ; initiate syscalls
+    mov eax, 0x60        ; exit() syscall
+    xor edi, edi         ; exit code 0
+    syscall
