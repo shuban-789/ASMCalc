@@ -105,7 +105,7 @@ divide_func:
     b output_result
 
 output_result:
-    ; Output result (this part is simplified, you would need to convert the result to a string)
+    ; Output
     ldr x0, =1          ; stdout
     ldr x1, =retint     ; pointer to retint
     ldr x2, =8          ; length of retint
@@ -116,3 +116,5 @@ output_result:
     mov x8, 93          ; syscall number for exit (93 in ARM)
     mov x0, 0           ; exit code 0
     svc 0               ; syscall
+
+    ; TODO: Convert output to string type correctly
