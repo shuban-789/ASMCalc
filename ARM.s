@@ -61,6 +61,10 @@ _start:
     mov x8, 63          ; syscall number for read
     svc 0               ; syscall
 
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;        Calculate       ;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     
     ldrb w0, [op]       ; load op into w0
     cmp w0, '+'         ; compare with '+'
