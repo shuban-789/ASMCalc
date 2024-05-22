@@ -1,5 +1,4 @@
 # ASMCalc
-Why? Because I'm bored.
 
 ### Breakdown
 | syscall/stream | value associated with | register (64bit) |
