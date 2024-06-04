@@ -109,8 +109,7 @@ divide_func:
     jmp output_result
 
 output_result:
-    ; Output result (example - you would need to convert the result to a string)
-    ; This part is simplified. Conversion to string and printing would be needed
+    ; Still need to handle correct string conversion and printing
     mov eax, 0x1         ; write() syscall
     mov rdi, 0x1         ; stdout
     mov rsi, retint      ; output text
